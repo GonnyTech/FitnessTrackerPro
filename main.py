@@ -291,10 +291,12 @@ class MainWindow(QMainWindow):
     def genera_consigli(self, allenamenti_filtrati):
         consigli = []
         if self.pesi:
-            pesi = [p.valore for p in self.pesi[-7:]]
-            if len(pesi) > 1 and pesi[-1] > pesi[0]:
+            # Ordina i pesi per data prima di analizzare
+            pesi_ordinati = sorted(self.pesi, key=lambda p: p.data)
+            pesi_recenti = [p.valore for p in pesi_ordinati[-7:]]
+            if len(pesi_recenti) > 1 and pesi_recenti[-1] > pesi_recenti[0]:
                 consigli.append("Il tuo peso è in aumento. Valuta di aumentare l'attività aerobica.")
-            elif len(pesi) > 1 and pesi[-1] < pesi[0]:
+            elif len(pesi_recenti) > 1 and pesi_recenti[-1] < pesi_recenti[0]:
                 consigli.append("Ottimo! Il tuo peso è in calo.")
         if allenamenti_filtrati:
             df = pd.DataFrame([vars(a) for a in allenamenti_filtrati])
