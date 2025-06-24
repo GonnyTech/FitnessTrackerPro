@@ -234,10 +234,13 @@ class MainWindow(QMainWindow):
         ax = self.grafico_peso.figure.add_subplot(111)
         ax.set_facecolor('#424242')
         if self.pesi:
-            df = pd.DataFrame([vars(p) for p in self.pesi])
-            df['data'] = pd.to_datetime(df['data'])
-            df = df.sort_values('data')
-            ax.plot(df['data'], df['valore'], marker='o', color='#82b1ff')
+            df_pesi = pd.DataFrame([vars(p) for p in self.pesi])
+            # Converte la colonna 'data' in oggetti datetime per ordinamento e visualizzazione corretti
+            df_pesi['data'] = pd.to_datetime(df_pesi['data'], dayfirst=True, errors='coerce')
+            df_pesi.dropna(subset=['data'], inplace=True) # Rimuove date non valide
+            df_pesi.sort_values(by='data', inplace=True)
+
+            ax.plot(df_pesi['data'], df_pesi['valore'], marker='o', color='#82b1ff')
             ax.set_title('Peso nel tempo', color='white')
             ax.set_ylabel('Kg', color='white')
             ax.grid(True, alpha=0.3)
@@ -291,13 +294,20 @@ class MainWindow(QMainWindow):
     def genera_consigli(self, allenamenti_filtrati):
         consigli = []
         if self.pesi:
-            # Ordina i pesi per data prima di analizzare
-            pesi_ordinati = sorted(self.pesi, key=lambda p: p.data)
-            pesi_recenti = [p.valore for p in pesi_ordinati[-7:]]
-            if len(pesi_recenti) > 1 and pesi_recenti[-1] > pesi_recenti[0]:
-                consigli.append("Il tuo peso è in aumento. Valuta di aumentare l'attività aerobica.")
-            elif len(pesi_recenti) > 1 and pesi_recenti[-1] < pesi_recenti[0]:
-                consigli.append("Ottimo! Il tuo peso è in calo.")
+            # Crea un DataFrame per ordinare correttamente per data
+            df_pesi = pd.DataFrame([vars(p) for p in self.pesi])
+            # Converte la colonna 'data' in oggetti datetime, gestendo formati diversi
+            df_pesi['data'] = pd.to_datetime(df_pesi['data'], dayfirst=True, errors='coerce')
+            df_pesi.dropna(subset=['data'], inplace=True) # Rimuove date non valide
+            df_pesi.sort_values(by='data', inplace=True)
+            
+            if not df_pesi.empty:
+                pesi_recenti = df_pesi['valore'].tail(7).tolist()
+                if len(pesi_recenti) > 1 and pesi_recenti[-1] > pesi_recenti[0]:
+                    consigli.append("Il tuo peso è in aumento. Valuta di aumentare l'attività aerobica.")
+                elif len(pesi_recenti) > 1 and pesi_recenti[-1] < pesi_recenti[0]:
+                    consigli.append("Ottimo! Il tuo peso è in calo.")
+
         if allenamenti_filtrati:
             df = pd.DataFrame([vars(a) for a in allenamenti_filtrati])
             if (df['battito'] > 170).any():
@@ -314,7 +324,7 @@ class MainWindow(QMainWindow):
                     consigli.append("Puoi provare ad aumentare la frequenza delle bracciate nel nuoto.")
             if 'Ciclismo' in df['sport'].values:
                 ciclismo_df = df[df['sport']=='Ciclismo'].copy()
-                if 'velocita_media' in ciclismo_df.columns and (ciclismo_df['velocita_media'] > 35).any():
+                if 'velocita_media' in ciclismo_df.columns and (ciclismo_df['velocita_media'] > 25).any():
                     consigli.append("Velocità media eccezionale nel ciclismo! Grande performance.")
                 if 'dislivello' in ciclismo_df.columns and ciclismo_df['dislivello'].sum() > 1000:
                     consigli.append("Hai superato i 1000m di dislivello totale nel ciclismo questa settimana, ottimo lavoro in salita!")
