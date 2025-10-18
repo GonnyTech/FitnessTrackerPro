@@ -1,0 +1,7 @@
+echo Set oWS = WScript.CreateObject("WScript.Shell") 
+echo sLinkFile = "%USERPROFILE%\Desktop\FitnessTrackerPro.lnk" 
+echo Set oLink = oWS.CreateShortcut(sLinkFile) 
+echo oLink.TargetPath = %INSTALL_DIR%\FitnessTrackerPro.exe 
+echo oLink.IconLocation = %INSTALL_DIR%\FitnessTrackerPro.exe,0 
+echo oLink.WorkingDirectory = %INSTALL_DIR% 
+echo oLink.Save 

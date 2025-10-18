@@ -1,0 +1,119 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# C extensions
+*.so
+
+# Distribution / packaging
+.Python
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# Icon generation artifacts
+dumbbell.png
+dumbbell2.png
+icon_fixed.ico
+
+# Data files
+*.csv
+
+# PyInstaller
+#  Usually these files are created by PyInstaller in `.spec` file's parent
+#  directory or in 'build' subdirectory.
+build/
+dist/
+*.spec
+release/
+
+# develop-eggs/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# Installer logs
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.nox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+.hypothesis/
+.pytest_cache/
+
+# Translations
+*.mo
+*.pot
+
+# Django Stuff
+*.log
+local_settings.py
+db.sqlite3
+
+# Flask Stuff
+instance/
+.webassets-cache
+
+# Scrapy Stuff
+.scrapy
+
+# Sphinx documentation
+docs/_build/
+
+# PyBuilder
+target/
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# IPython
+profile_default/
+ipython_config.py
+
+# pyenv
+.python-version
+
+# celery beat schedule file
+celerybeat-schedule
+
+# SageMath parsed files
+*.sage.py
+
+# Spyder project settings
+.spyderproject
+.spyderworkspace
+
+# Rope project settings
+.ropeproject
+
+# Microsoft Visual Studio Code settings
+.vscode/
+
+# PyCharm settings
+.idea/
+
+# personal files
+pesi.csv
+allenamenti.csv 
