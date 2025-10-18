@@ -85,4 +85,8 @@ This will generate a `release` folder containing the `FitnessTrackerPro.exe` and
 
 ## Contributing
 
+<<<<<<< HEAD
 Contributions are welcome! If you have ideas for new features or improvements, feel free to open an issue or submit a pull request. 
+=======
+Contributions are welcome! If you have ideas for new features or improvements, feel free to open an issue or submit a pull request. # FitnessTrackerPro
+>>>>>>> 9f6ce3dee8bfded5b470dfc94b53ba7354e0f2ea
